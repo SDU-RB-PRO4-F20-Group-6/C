@@ -68,11 +68,11 @@ void StartSetup(void)
     GPIO_PORTF_DIR_R = 0x0E; // 0000 1110
 }
 
-void delay(int number)
-{
-    for(int i = 0; i<number; i++)
-        for (uint16_t  j=0; j < 65534; j++);
-}
+//void delay(int number)
+//{
+//    for(int i = 0; i<number; i++)
+//        for (uint16_t  j=0; j < 65534; j++);
+//}
 
 int main(void)
 /*****************************************************************************

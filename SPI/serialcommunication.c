@@ -22,6 +22,8 @@
 
 /*****************************   Variables   *******************************/
 
+INT8U    commandline[9]; // Saved characters from cli.
+INT8U    commandlinepointer = 0; // Pointer to commandline[9]. Indicates next char in array to be input.
 
 /*****************************   Functions   *******************************/
 
@@ -83,14 +85,61 @@ extern void serialcom_printnl(void)
     serialcom_printchar(0x0d);
 }
 
-//extern void serialcom_print();
+
+extern void serialcom_setparameters(void)
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
-*   Function : Test function
+*   Function : Function that gets parameters from a serial terminal program
 ******************************************************************************/
+{
+    // gets the first control parameter 'H' meaning horizontal values will now be input
+    // error 'X' will be output should the control parameter be faulty
 
+    if(serialcom_getchar() == 'H')
+    {
+        commandline[commandlinepointer] = 'H';
+        commandlinepointer++;
+    }
+    else
+    {
+        serialcom_printnl();
+        serialcom_printchar('X');
+    }
 
+    // takes the next 4 chars
+    for(int i = 0; i < 4; i++)
+    {
+        commandline[commandlinepointer] = serialcom_getchar();
+        commandlinepointer++;
+    }
+
+    // next control parameter & error value output
+    if(serialcom_getchar() == 'V')
+    {
+        commandline[commandlinepointer] = 'V';
+        commandlinepointer++;
+    }
+    else
+    {
+        serialcom_printnl();
+        serialcom_printchar('X');
+    }
+
+    // takes next 4 chars
+    for(int i = 0; i < 4; i++)
+    {
+        commandline[commandlinepointer] = serialcom_getchar();
+        commandlinepointer++;
+    }
+
+    // resets pointer
+    commandlinepointer = 0;
+
+    /*
+     * INSERT FUNCTION TO RECIEVE THE INPUT DATA AND DOES SOMETHING WITH IT
+     */
+}
 
 
 /****************************** End Of Module *******************************/

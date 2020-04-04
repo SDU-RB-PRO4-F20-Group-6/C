@@ -75,6 +75,7 @@ void spi_transmit(INT16U dataframe)
 ******************************************************************************/
 {
     SSI3_DR_R  = dataframe;
+    while((SSI3_CR1_R >>4) != 1);
 }
 
 

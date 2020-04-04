@@ -18,12 +18,13 @@
 #include <glob_def.h>
 #include <serialcommunication.h>
 #include <spi.h>
+#include "systick.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-
+extern volatile INT16S ticks;
 
 /*****************************   Functions   *******************************/
 
@@ -67,6 +68,11 @@ void StartSetup(void)
     GPIO_PORTF_DIR_R = 0x0E; // 0000 1110
 }
 
+void delay(int number)
+{
+    for(int i = 0; i<number; i++)
+        for (uint16_t  j=0; j < 65534; j++);
+}
 
 int main(void)
 /*****************************************************************************
@@ -75,6 +81,10 @@ int main(void)
 *   Function :
 ******************************************************************************/
 {
+    disable_global_int();
+    init_systick();
+    enable_global_int();
+
     StartSetup();
 
     serialcommunication_standardinitialize();
@@ -82,10 +92,18 @@ int main(void)
     serialcom_printnl();
 
     INT8U a = 0x2;
+    INT8U color = 0;
     spi_init(a);
 
     serialcom_printchar('s');
     serialcom_printnl();
+
+    while(1)
+    {
+        color = (color + 1) % 8;
+        GPIO_PORTF_DATA_R = (color << 1);
+        spi_transmit(color);
+    }
 
 
     return 0;

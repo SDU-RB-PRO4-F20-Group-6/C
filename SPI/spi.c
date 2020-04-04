@@ -135,6 +135,7 @@ void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM)
 * --------------------
 * 280320  TH/MW     Module created - spi_initialization created
 * 020420  TH/MW/CH  spi_recieve/transmit added
+* 040420  TH/MW/CH  framefunctions added
 *
 */
 

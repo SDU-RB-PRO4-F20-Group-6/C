@@ -150,7 +150,8 @@ extern void serialcom_setparameters(void)
 * Date    Id    Change
 * DDMMYY
 * --------------------
-* XXYYZZ  TH    Module created.
+* XXYYZZ  TH        Module created.
+* 040420  TH/MW/CH  communication between cli and controller established
 */
 
 

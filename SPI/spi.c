@@ -27,6 +27,7 @@
 #define MCSELECTOFFSET 14
 #define MDIROFFSET 13
 #define PWMOFFSET 4
+#define PARITYOFFSET 3
 #define PWMRESOLUTION 9
 
 /*****************************   Constants   *******************************/
@@ -122,6 +123,18 @@ void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM)
 
     // parity calculation and put on bit 3
 
+    INT16U spiparityframe  = spiframe;
+    INT8U paritycounter = 0x0;
+
+    // parity bit calculation for even parity
+    for(int i = 15; i >= 0; i--)
+    {
+        paritycounter += spiparityframe && 0x1;
+        spiparityframe = (spiparityframe >> 0x1);
+    }
+
+    if( paritycounter % 2 ) { spiframe |= (0x1 << PARITYOFFSET); }
+
     spi_transmit(spiframe);
 }
 
@@ -136,6 +149,7 @@ void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM)
 * 280320  TH/MW     Module created - spi_initialization created
 * 020420  TH/MW/CH  spi_recieve/transmit added
 * 040420  TH/MW/CH  framefunctions added
+* 060420  TH/MW/CH  parity calculation added for frame functions
 *
 */
 

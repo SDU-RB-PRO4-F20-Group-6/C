@@ -34,7 +34,7 @@ void spi_transmit(INT16U dataframe);
 ******************************************************************************/
 
 
-void frame_opbygning(BOOLEAN motor, BOOLEAN dir, INT16U PWM);
+void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM);
 /*****************************************************************************
 *   Input    : the values needed for frame construction
 *   Output   : -

@@ -68,6 +68,7 @@ void StartSetup(void)
     GPIO_PORTF_DIR_R |= 0x0E; // 0000 1110
 }
 
+<<<<<<< HEAD
 void delay(int number)
 {
 //    for(int i = 0; i<number; i++)
@@ -75,6 +76,13 @@ void delay(int number)
     ticks = 0;
     while(ticks < number);
 }
+=======
+//void delay(int number)
+//{
+//    for(int i = 0; i<number; i++)
+//        for (uint16_t  j=0; j < 65534; j++);
+//}
+>>>>>>> branch 'master' of https://github.com/SDU-RB-PRO4-F20-Group-6/C.git
 
 int main(void)
 /*****************************************************************************

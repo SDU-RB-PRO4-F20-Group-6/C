@@ -34,6 +34,16 @@ void spi_transmit(INT16U dataframe);
 ******************************************************************************/
 
 
+void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM);
+/*****************************************************************************
+*   Input    : the values needed for frame construction
+*   Output   : -
+*   Function : creates a full frame and transmits
+******************************************************************************/
+
+
+
+
 INT16U spi_receive(void);
 /*****************************************************************************
 *   Input    : -

@@ -59,5 +59,14 @@ extern void serialcom_printnl(void);
 ******************************************************************************/
 
 
+extern void serialcom_setparameters(void);
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Function that gets parameters from a serial terminal program
+******************************************************************************/
+
+
+
 /****************************** End Of Module *******************************/
 //#endif

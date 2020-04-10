@@ -38,15 +38,16 @@ void spi_init(INT8U clkprescale)
     SYSCTL_RCGCSSI_R |= SYSCTL_RCGCSSI_R3;
 
     //enable clock on portd (R3)
-    SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R3;
+    SYSCTL_RCGCGPIO_R |= (1 << 3);
 
 
     //setup for ssi on gpio-portd
-    GPIO_PORTD_AFSEL_R  |= (0x1 << 2) | (0x1 << 3) | (0x1 << 4) | (0x1 << 5);
+    GPIO_PORTD_AFSEL_R  |= (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 3);
 
-    GPIO_PORTD_PCTL_R   |= (0x2 << 8) | (0x2 << 12) | (0x2 << 16) | (0x2 << 20);
+    GPIO_PORTD_PCTL_R   |= 0x1111;
 
-    GPIO_PORTD_DEN_R    |= (0x1 << 2) | (0x1 << 3) | (0x1 << 4) | (0x1 << 5);
+    GPIO_PORTD_DEN_R    |= (0x1 << 0) | (0x1 << 1) | (0x1 << 2) | (0x1 << 3);
+
 
     // Ensuring the SSE bit in the SSICR1 register is clear
     SSI3_CR1_R &= ~(0x1 << 1);
@@ -77,7 +78,7 @@ void spi_transmit(INT16U dataframe)
 ******************************************************************************/
 {
     SSI3_DR_R  = dataframe;
-    while((SSI3_CR1_R >>4) != 1);
+    //while((SSI3_CR1_R >>4) != 1);
 }
 
 

@@ -57,22 +57,32 @@ void StartSetup(void)
     // PORTF FORMAT: 000 SW1 LED1 LED2 LED3 SW2
 
     // enable pins - Disable-Enable Register (PortF)
-    GPIO_PORTF_DEN_R = 0x1F; // 0001 1111
+    GPIO_PORTF_DEN_R |= 0x1F; // 0001 1111
 
     // Enable Internal Pullups - Pull Up Resistor (PORTF)
     // pullups for buttons etc
-    GPIO_PORTF_PUR_R = 0x11; // 0001 0001
+    GPIO_PORTF_PUR_R |= 0x11; // 0001 0001
 
     // Set DIRection pins Register (PORTF)
     // 1 meaning output 0 meaning input
-    GPIO_PORTF_DIR_R = 0x0E; // 0000 1110
+    GPIO_PORTF_DIR_R |= 0x0E; // 0000 1110
 }
 
+<<<<<<< HEAD
+void delay(int number)
+{
+//    for(int i = 0; i<number; i++)
+//        for (uint16_t  j=0; j < 65534; j++);
+    ticks = 0;
+    while(ticks < number);
+}
+=======
 //void delay(int number)
 //{
 //    for(int i = 0; i<number; i++)
 //        for (uint16_t  j=0; j < 65534; j++);
 //}
+>>>>>>> branch 'master' of https://github.com/SDU-RB-PRO4-F20-Group-6/C.git
 
 int main(void)
 /*****************************************************************************
@@ -84,25 +94,27 @@ int main(void)
     disable_global_int();
     init_systick();
     enable_global_int();
-
-    StartSetup();
-
-    serialcommunication_standardinitialize();
-    serialcom_printchar('r');
-    serialcom_printnl();
-
-    INT8U a = 0x2;
     INT8U color = 0;
-    spi_init(a);
+    StartSetup();
+//
+//    serialcommunication_standardinitialize();
+//    serialcom_printchar('r');
+//    serialcom_printnl();
+//
+//    INT8U a = 0x2;
 
-    serialcom_printchar('s');
-    serialcom_printnl();
+    spi_init(0x2);
+//
+//    serialcom_printchar('s');
+//    serialcom_printnl();
 
     while(1)
     {
         color = (color + 1) % 8;
         GPIO_PORTF_DATA_R = (color << 1);
         spi_transmit(color);
+        delay(200);
+
     }
 
 

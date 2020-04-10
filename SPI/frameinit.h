@@ -42,10 +42,10 @@ void senddataframe(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM);
 ******************************************************************************/
 
 
-extern void requestframe(BOOLEAN motorchoice, BOOLEAN datatype);
+INT16U requestframe(BOOLEAN motorchoice, BOOLEAN datatype);
 /*****************************************************************************
 *   Input    : specification of chosen motor [0/1] and the type of data [hallindex/motorposition] = [1/0]
-*   Output   : -
+*   Output   : the recieved dataframe after requesting
 *   Function : requests different types of frames from the FPGA
 ******************************************************************************/
 

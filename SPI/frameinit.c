@@ -17,6 +17,13 @@
 #include <serialcommunication.h>
 #include <frameinit.h>
 
+
+
+
+//#include <stdint.h>
+//#include <stdbool.h>
+//  uint16_t hello = 0;
+
 /*****************************    Defines    *******************************/
 
 #define FRAMESIZE 15
@@ -30,6 +37,8 @@
 #define PWMRESOLUTION 9
 
 #define DATATYPEOFFSET 14
+
+#define EMPTYFRAME 0
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -75,10 +84,10 @@ void senddataframe(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM)
 }
 
 
-extern void requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
+INT16U requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
 /*****************************************************************************
 *   Input    : specification of chosen motor [0/1] and the type of data [hallindex/motorposition] = [1/0]
-*   Output   : -
+*   Output   : the recieved dataframe after requesting
 *   Function : requests different types of frames from the FPGA
 ******************************************************************************/
 {
@@ -91,6 +100,14 @@ extern void requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
     if( !evenparity(spiframe) ) { spiframe |= (0x1 << PARITYOFFSET); }
 
     spi_transmit(spiframe);
+
+
+    spi_transmit(EMPTYFRAME);
+
+    INT16U receivedframe = spi_receive();
+
+
+    if ( evenparity(receivedframe) ) { return receivedframe; } else {return 0x0;}
 }
 
 
@@ -114,10 +131,7 @@ BOOLEAN evenparity(INT16U frame)
     }
 
 
-    if( paritycounter % 2 )
-        {return 0x0;}
-    else
-        {return 0x1;}
+    if( paritycounter % 2 ) {return 0x0;} else {return 0x1;}
 }
 
 /****************************** End Of Module *******************************/

@@ -20,15 +20,6 @@
 
 /*****************************    Defines    *******************************/
 
-#define FRAMESIZE 15
-
-// used for frame composition
-#define FRAMETYPEOFFSET 15
-#define MCSELECTOFFSET 14
-#define MDIROFFSET 13
-#define PWMOFFSET 4
-#define PARITYOFFSET 3
-#define PWMRESOLUTION 9
 
 /*****************************   Constants   *******************************/
 
@@ -102,41 +93,7 @@ INT16U spi_receive(void)
 }
 
 
-void frame_opbygning(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM)
-/*****************************************************************************
-*   Input    : the values needed for frame construction
-*   Output   : -
-*   Function : creates a full frame and transmits
-******************************************************************************/
-{
-    INT16U spiframe = 0x0;
 
-    spiframe |= (0x1 << FRAMETYPEOFFSET);
-
-    if( mcselect != 0 ) { spiframe |= (0x1 << MCSELECTOFFSET); }
-
-    if( mdir != 0 ) { spiframe |= (0x1 << MDIROFFSET); }
-
-    PWM = (PWM >> (FRAMESIZE - PWMRESOLUTION) );
-
-    spiframe |= (PWM << PWMOFFSET);
-
-    // parity calculation and put on bit 3
-
-    INT16U spiparityframe  = spiframe;
-    INT8U paritycounter = 0x0;
-
-    // parity bit calculation for even parity
-    for(int i = 15; i >= 0; i--)
-    {
-        paritycounter += spiparityframe && 0x1;
-        spiparityframe = (spiparityframe >> 0x1);
-    }
-
-    if( paritycounter % 2 ) { spiframe |= (0x1 << PARITYOFFSET); }
-
-    spi_transmit(spiframe);
-}
 
 /****************************** End Of Module *******************************/
 

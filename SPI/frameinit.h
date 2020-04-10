@@ -2,21 +2,23 @@
 * University of Southern Denmark
 * Embedded Programming (EMP)
 *
-* MODULENAME.:
+* MODULENAME.: 
 *
-* PROJECT....:
+* PROJECT....: 
 *
-* DESCRIPTION:
+* DESCRIPTION: 
 *
 * Change Log:
 ******************************************************************************
 See [$filename$].c
 *****************************************************************************/
 
-
+//#ifndef "HEADERNAME"
+//#define "HEADERNAME"
 
 /***************************** Include files *******************************/
-
+#include <emp_type.h>
+#include <glob_def.h>
 /*****************************    Defines    *******************************/
 
 /********************** External declaration of Variables ******************/
@@ -25,32 +27,35 @@ See [$filename$].c
 
 /*************************  Function interfaces ****************************/
 
-
-void spi_transmit(INT16U dataframe);
-/*****************************************************************************
-*   Input    : the specified dataframe that has to be sent using the spi communication.
-*   Output   : -
-*   Function : the spi function that takes care of sending to slave
-******************************************************************************/
-
-
-
-
-INT16U spi_receive(void);
-/*****************************************************************************
-*   Input    : -
-*   Output   : the received dataframe from slave
-*   Function : the spi function that takes care of receiving from slave
-******************************************************************************/
-
-
-void spi_init(INT8U clkprescale);
+extern void function1(void);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
-*   Function : initialization of spi communication
+*   Function : Test function
+******************************************************************************/
+
+void senddataframe(BOOLEAN mcselect, BOOLEAN mdir, INT16U PWM);
+/*****************************************************************************
+*   Input    : the values needed for frame construction
+*   Output   : -
+*   Function : creates a full frame and transmits
 ******************************************************************************/
 
 
+extern void requestframe(BOOLEAN motorchoice, BOOLEAN datatype);
+/*****************************************************************************
+*   Input    : specification of chosen motor [0/1] and the type of data [hallindex/motorposition] = [1/0]
+*   Output   : -
+*   Function : requests different types of frames from the FPGA
+******************************************************************************/
+
+
+ BOOLEAN evenparity(INT16U frame);
+/*****************************************************************************
+*   Input    : the frame without parity
+*   Output   : if parity is true or false
+*   Function : parity calculator for both checking and creating
+******************************************************************************/
 
 /****************************** End Of Module *******************************/
+//#endif

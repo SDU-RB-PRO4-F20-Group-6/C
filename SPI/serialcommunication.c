@@ -25,6 +25,7 @@
 INT8U    commandline[9]; // Saved characters from cli.
 INT8U    commandlinepointer = 0; // Pointer to commandline[9]. Indicates next char in array to be input.
 
+
 /*****************************   Functions   *******************************/
 
 extern void function1(void);

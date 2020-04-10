@@ -20,9 +20,6 @@
 
 
 
-//#include <stdint.h>
-//#include <stdbool.h>
-//  uint16_t hello = 0;
 
 /*****************************    Defines    *******************************/
 

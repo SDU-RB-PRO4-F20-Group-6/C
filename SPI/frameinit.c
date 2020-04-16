@@ -23,7 +23,7 @@
 
 /*****************************    Defines    *******************************/
 
-#define FRAMESIZE 15
+#define FRAMESIZE 16
 
 // used for frame composition
 #define FRAMETYPEOFFSET 15

@@ -23,7 +23,7 @@
 
 /*****************************    Defines    *******************************/
 
-#define FRAMESIZE 15
+#define FRAMESIZE 16
 
 // used for frame composition
 #define FRAMETYPEOFFSET 15
@@ -104,7 +104,14 @@ INT16U requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
     INT16U receivedframe = spi_receive();
 
 
-    if ( evenparity(receivedframe) ) { return receivedframe; } else {return 0x0;}
+    if ( evenparity(receivedframe) )
+    {
+        return receivedframe >> 1;
+    }
+    else
+    {
+        return 0x0;
+    }
 }
 
 
@@ -140,6 +147,7 @@ BOOLEAN evenparity(INT16U frame)
 * DDMMYY
 * --------------------
 * 100420  TH/MW/CH    Module created.
+* 200420  TH/MW/CH    Change framesize from 15 to 16.
 */
 
 

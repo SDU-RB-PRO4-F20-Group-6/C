@@ -14,6 +14,7 @@
 ****************************** Include files *******************************/
 #include <tm4c123gh6pm.h>
 #include <emp_type.h>
+#include <stdint.h>
 #include <glob_def.h>
 #include <uart0.h>
 /*****************************    Defines    *******************************/
@@ -142,6 +143,34 @@ extern void serialcom_setparameters(void)
      */
 }
 
+int16_t serialcom_get_hor()
+{
+    int16_t value = 0;
+    if(commandline[1] == '-')
+    {
+        value -= (commandline[2]-'0')*100 + (commandline[3]-'0')*10 + (commandline[4]-'0');
+    }
+    else
+    {
+        value += (commandline[2]-'0')*100 + (commandline[3]-'0')*10 + (commandline[4]-'0');
+    }
+    return value;
+}
+
+int16_t serialcom_get_ver()
+{
+    int16_t value = 0;
+    if(commandline[6] == '-')
+    {
+        value -= (commandline[7]-'0')*100 + (commandline[8]-'0')*10 + (commandline[9]-'0');
+    }
+    else
+    {
+        value += (commandline[7]-'0')*100 + (commandline[8]-'0')*10 + (commandline[9]-'0');
+    }
+
+    return value;
+}
 
 /****************************** End Of Module *******************************/
 
@@ -153,6 +182,7 @@ extern void serialcom_setparameters(void)
 * --------------------
 * XXYYZZ  TH        Module created.
 * 040420  TH/MW/CH  communication between cli and controller established
+* 200420  TH/MW/CH  made serialcom_get vertical and horizontal
 */
 
 

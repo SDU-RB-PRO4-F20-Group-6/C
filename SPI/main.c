@@ -144,6 +144,18 @@ int main(void)
 */
 
 
+//main()
+
+// initialize
+
+// calibrering
+
+// vent på input
+
+// regulering så den møder inputtets krav
+
+// done med regulering, venter på nyt input
+
 
 
 

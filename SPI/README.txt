@@ -20,6 +20,10 @@ FILE MANIFEST
 	spi.h - SPI communication protocol. This module is deeply correlated with frameinit.h.
 
 	uart0.h - UART serial communication for the CLI.
+	
+	pid.h - PID controller module.
+	
+	encValConv.h - Module that converts encoder values to absolute lengths.
 
 
 DEVELOPER INFORMATION

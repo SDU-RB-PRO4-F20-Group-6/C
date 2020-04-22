@@ -33,7 +33,7 @@
 #define PARITYOFFSET 0
 #define PWMRESOLUTION 9
 
-#define DATATYPEOFFSET 14
+#define DATATYPEOFFSET 13
 
 #define EMPTYFRAME 0
 /*****************************   Constants   *******************************/

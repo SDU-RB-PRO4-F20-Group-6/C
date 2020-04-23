@@ -130,7 +130,7 @@ BOOLEAN evenparity(INT16U frame)
     // parity bit calculation for even parity
     for(int i = 15; i >= 0; i--)
     {
-        paritycounter += frame && 0x1;
+        paritycounter += frame & 0x1;
         frame = (frame >> 0x1);
     }
 

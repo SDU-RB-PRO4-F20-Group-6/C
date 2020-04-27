@@ -17,9 +17,9 @@
 
 /*************************  Function interfaces ****************************/
 
-void pidH(int16_t reference);
+void pidH();
 
-void pidV(int16_t reference);
+void pidV();
 
 
 

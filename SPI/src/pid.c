@@ -51,7 +51,7 @@ void pidH()
         senddataframe(1, 0, pwmOut);
 }
 
-void pidV(int16_t reference)
+void pidV()
 {
     int16_t pwmOut = 0;
     int16_t error = 0;

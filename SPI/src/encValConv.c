@@ -39,6 +39,3 @@ double len2Enc(double len)
 * --------------------
 * 200420  TH/MW/CH    Module created.
 */
-
-TESTTESTSTETSTSTSTST
-

@@ -154,6 +154,8 @@ int16_t serialcom_get_hor()
     {
         value += (commandline[2]-'0')*100 + (commandline[3]-'0')*10 + (commandline[4]-'0');
     }
+    for(int i = 0; i < 3; i++)
+        commandline[i+2] = '0';
     return value;
 }
 
@@ -168,6 +170,8 @@ int16_t serialcom_get_ver()
     {
         value += (commandline[7]-'0')*100 + (commandline[8]-'0')*10 + (commandline[9]-'0');
     }
+    for(int i = 0; i < 3; i++)
+            commandline[i+7] = '0';
 
     return value;
 }
@@ -183,6 +187,7 @@ int16_t serialcom_get_ver()
 * XXYYZZ  TH        Module created.
 * 040420  TH/MW/CH  communication between cli and controller established
 * 200420  TH/MW/CH  made serialcom_get vertical and horizontal
+* 270420  TH/MW/CH  filling commandline with '0' after extracting data
 */
 
 

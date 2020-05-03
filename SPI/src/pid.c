@@ -16,15 +16,21 @@
 #define INC_PID_H_
 /***************************** Include files *******************************/
 #include <stdint.h>
+#include <stdbool.h>
 #include "pid.h"
 /*****************************    Defines    *******************************/
 #define kpH 1
 #define kiH 1
 #define kdH 1
+#define UPPER_THRESHOLD_H 0
+#define LOWER_THRESHOLD_H 0
 
 #define kpV 1
 #define kiV 1
 #define kdV 1
+#define UPPER_THRESHOLD_V 0
+#define LOWER_THRESHOLD_V 0
+
 /********************** External declaration of Variables ******************/
 
 /*****************************   Constants   *******************************/
@@ -32,15 +38,19 @@
 /*****************************   variable    *******************************/
 int16_t errorSumH, errorDiffH, errorPreH, errorSumV, errorDiffV, errorPreV = 0;
 
+//for optimisation (to stop function form initializing at every call)
+int16_t pwmOut = 0;
+int16_t error = 0;
+bool antiwindup = false;
+
 /*************************  Function interfaces ****************************/
 
 void pidH()
 {
-    int16_t pwmOut = 0;
-    int16_t error = 0;
 
     error = serialcom_get_hor() - requestframe(1, 0);
-    errorSumH += error;
+    if (error < UPPER_THRESHOLD_H && error > LOWER_THRESHOLD_H)
+        errorSumH += error;
     errorDiffH = errorPreH - error;
 
     pwmOut = error*kpH + errorSumH*kiH + errorDiffH*kdH;
@@ -53,11 +63,10 @@ void pidH()
 
 void pidV()
 {
-    int16_t pwmOut = 0;
-    int16_t error = 0;
 
     error = serialcom_get_ver() - requestframe(0, 0);
-    errorSumV += error;
+    if (error < UPPER_THRESHOLD_V && error > LOWER_THRESHOLD_V)
+        errorSumV += error;
     errorDiffV = errorPreV - error;
 
     pwmOut = error*kpV + errorSumV*kiV + errorDiffV*kdV;
@@ -79,6 +88,7 @@ void pidV()
 * DDMMYY
 * --------------------
 * 200420  TH/MW/CH    Module created.
+* 280420  TH/MW/CH    Added conditional integration
 */
 
 

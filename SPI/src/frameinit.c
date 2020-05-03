@@ -96,8 +96,10 @@ INT16U requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
 
     if( !evenparity(spiframe) ) { spiframe |= (0x1 << PARITYOFFSET); }
 
-    spi_transmit(spiframe);
+    INT16U paritycontrolvar = 0x0;
 
+    while (paritycontrolvar == 0x0){
+    spi_transmit(spiframe);
 
     spi_transmit(EMPTYFRAME);
 
@@ -105,12 +107,14 @@ INT16U requestframe(BOOLEAN motorchoice, BOOLEAN datatype)
 
 
     if ( evenparity(receivedframe) )
-    {
+        {
         return receivedframe >> 1;
-    }
+        paritycontrolvar == 0x1;
+        }
     else
-    {
-        return 0x0;
+        {
+        paritycontrolvar == 0x0;
+        }
     }
 }
 

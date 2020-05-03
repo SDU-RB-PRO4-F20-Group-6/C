@@ -145,16 +145,22 @@ int main(void)
 
 
 //main()
-
-// initialize
-
-// calibrering
-
-// vent på input
-
-// regulering så den møder inputtets krav
-
-// done med regulering, venter på nyt input
+//
+//// initialize
+//
+//serialcommunication_standardinitialize(void);
+//spi_init(0x2);
+//
+//// calibrering
+//
+//calibratesetup(void);
+//
+//// Check for CLI input, Regulate, Transmit and Receive.
+//while(1)
+//{
+//    pidH();
+//    pidV();
+//}
 
 
 

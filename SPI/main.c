@@ -19,11 +19,12 @@
 #include <serialcommunication.h>
 #include <spi.h>
 #include "systick.h"
+#include <calibration.h>
 
 
 
-//#include <stdint.h>
-//#include <stdbool.h>
+#include <stdint.h>
+#include <stdbool.h>
 //  uint16_t hello = 0;
 
 
@@ -64,19 +65,20 @@ void StartSetup(void)
 ******************************************************************************/
 {
     DummyRead();
-
     // PORTF FORMAT: 000 SW1 LED1 LED2 LED3 SW2
 
+    // PORTD setup
+
     // enable pins - Disable-Enable Register (PortF)
-    GPIO_PORTF_DEN_R |= 0x1F; // 0001 1111
+    GPIO_PORTD_DEN_R |= 0x1F; // 0001 1111
 
     // Enable Internal Pullups - Pull Up Resistor (PORTF)
     // pullups for buttons etc
-    GPIO_PORTF_PUR_R |= 0x11; // 0001 0001
+    GPIO_PORTD_PUR_R |= 0x11; // 0001 0001
 
     // Set DIRection pins Register (PORTF)
     // 1 meaning output 0 meaning input
-    GPIO_PORTF_DIR_R |= 0x0E; // 0000 1110
+    GPIO_PORTD_DIR_R |= 0x0E; // 0000 1110
 }
 
 
@@ -95,42 +97,42 @@ void delay(int number)
 //}
 
 
-int main(void)
-/*****************************************************************************
-*   Input    :
-*   Output   :
-*   Function :
-******************************************************************************/
-{
-    disable_global_int();
-    init_systick();
-    enable_global_int();
-    INT8U color = 0;
-    StartSetup();
+//int main(void)
+///*****************************************************************************
+//*   Input    :
+//*   Output   :
+//*   Function :
+//******************************************************************************/
+//{
+//    disable_global_int();
+//    init_systick();
+//    enable_global_int();
+//    INT8U color = 0;
+//    StartSetup();
+////
+////    serialcommunication_standardinitialize();
+////    serialcom_printchar('r');
+////    serialcom_printnl();
+////
+////    INT8U a = 0x2;
 //
-//    serialcommunication_standardinitialize();
-//    serialcom_printchar('r');
-//    serialcom_printnl();
+//    spi_init(0x2);
+////
+////    serialcom_printchar('s');
+////    serialcom_printnl();
 //
-//    INT8U a = 0x2;
-
-    spi_init(0x2);
+//    while(1)
+//    {
+//        color = (color + 1) % 8;
+//        GPIO_PORTF_DATA_R = (color << 1);
+//        spi_transmit(color);
+//        delay(200);
 //
-//    serialcom_printchar('s');
-//    serialcom_printnl();
-
-    while(1)
-    {
-        color = (color + 1) % 8;
-        GPIO_PORTF_DATA_R = (color << 1);
-        spi_transmit(color);
-        delay(200);
-
-    }
-
-
-    return 0;
-}
+//    }
+//
+//
+//    return 0;
+//}
 
 /****************************** End Of Module *******************************/
 
@@ -144,24 +146,27 @@ int main(void)
 */
 
 
-//main()
-//
-//// initialize
-//
-//serialcommunication_standardinitialize(void);
-//spi_init(0x2);
-//
-//// calibrering
-//
-//calibratesetup(void);
-//
-//// Check for CLI input, Regulate, Transmit and Receive.
-//while(1)
-//{
-//    pidH();
-//    pidV();
-//}
+int main(void)
+{
+    // initialize
+    StartSetup();
 
+    serialcommunication_standardinitialize();
+    spi_init(0x2);
+
+    // calibrering
+
+    calibratesetup();
+
+    // Check for CLI input, Regulate, Transmit and Receive.
+    while(1)
+    {
+        pidH();
+        pidV();
+    }
+
+    return 0;
+}
 
 
 

@@ -4,7 +4,7 @@
 
 
 
-#define SYSTICK_RELOAD_VALUE 80000 // 5 mS
+#define SYSTICK_RELOAD_VALUE 16000 // 1 mS
 
 // Missing definitions in tm4c123gh6pm.h file
 #define NVIC_INT_CTRL_PEND_SYST   0x04000000  // Pend a systick int
@@ -13,6 +13,8 @@
 #define SYSTICK_PRIORITY    0x7E
 
 volatile INT16S ticks = 0;
+volatile INT16S tickH = 0;
+volatile INT16S tickV = 0;
 
 void systick_handler(void)
 /*****************************************************************************
@@ -21,6 +23,8 @@ void systick_handler(void)
 {
   // Hardware clears systick int reguest
   ticks++;
+  tickH++;
+  tickV++;
 }
 
 

@@ -19,23 +19,22 @@
 #include <stdbool.h>
 #include "pid.h"
 /*****************************    Defines    *******************************/
-#define kpH 1
-#define kiH 1
-#define kdH 1
-#define UPPER_THRESHOLD_H 0
-#define LOWER_THRESHOLD_H 0
+#define kpH 300
+#define kiH 30
+#define kdH 900
 
-#define kpV 1
-#define kiV 1
-#define kdV 1
-#define UPPER_THRESHOLD_V 0
-#define LOWER_THRESHOLD_V 0
+#define kpV 100
+#define kiV 10
+#define kdV 300
 
 /********************** External declaration of Variables ******************/
 
 /*****************************   Constants   *******************************/
 
 /*****************************   variable    *******************************/
+extern volatile INT16S tickH;
+extern volatile INT16S tickV;
+
 int16_t errorSumH, errorDiffH, errorPreH, errorSumV, errorDiffV, errorPreV = 0;
 
 //for optimisation (to stop function form initializing at every call)
@@ -49,9 +48,8 @@ void pidH()
 {
 
     error = serialcom_get_hor() - requestframe(1, 0);
-    if (error < UPPER_THRESHOLD_H && error > LOWER_THRESHOLD_H)
-        errorSumH += error;
-    errorDiffH = errorPreH - error;
+    errorSumH += (tickH/2)*(error+errorPreH);
+    errorDiffH -= (2/tickH)*(error-errorPreH);
 
     pwmOut = error*kpH + errorSumH*kiH + errorDiffH*kdH;
 
@@ -59,15 +57,15 @@ void pidH()
         senddataframe(1, 1, pwmOut);
     else
         senddataframe(1, 0, pwmOut);
+    tickH = 0;
 }
 
 void pidV()
 {
 
     error = serialcom_get_ver() - requestframe(0, 0);
-    if (error < UPPER_THRESHOLD_V && error > LOWER_THRESHOLD_V)
-        errorSumV += error;
-    errorDiffV = errorPreV - error;
+    errorSumV += (tickV/2)*(error+errorPreV);
+    errorDiffV -= (2/tickV)*(error-errorPreV);
 
     pwmOut = error*kpV + errorSumV*kiV + errorDiffV*kdV;
 
@@ -75,6 +73,8 @@ void pidV()
         senddataframe(0, 1, pwmOut);
     else
         senddataframe(0, 0, pwmOut);
+
+    tickV = 0;
 }
 
 
